@@ -38,6 +38,11 @@ lazy val commonSettings = Seq(
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
   .settings(commonSettings: _*)
+  .settings(
+     publishArtifact in (Compile, packageDoc) := false,
+     publishArtifact in packageDoc := false,
+     sources in (Compile,doc) := Seq.empty
+  )
   .dependsOn(
     ui,
     index,
@@ -162,10 +167,13 @@ lazy val pubmed = (project in file("modules/pubmed"))
   .enablePlugins(PlayJava)
   .settings(commonSettings: _*)
   .settings(
-  name := "pubmed",
+    name := "pubmed",
     libraryDependencies ++= commonDependencies,
     libraryDependencies +=   "org.json" % "json" % "20090211",
-    javacOptions ++= javaBuildOptions
+    javacOptions ++= javaBuildOptions,
+    publishArtifact in (Compile, packageDoc) := false,
+    publishArtifact in packageDoc := false,
+    sources in (Compile,doc) := Seq.empty
   ).dependsOn(semmed,index).aggregate(semmed,index)
 
 lazy val umls = (project in file("modules/umls"))
